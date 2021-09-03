@@ -3,6 +3,8 @@ plugins {
     id 'maven-publish'
 }
 
+group = lib_group
+
 afterEvaluate {
     publishing {
         publications {
@@ -11,6 +13,8 @@ afterEvaluate {
                 groupId = lib_group
                 artifactId = 'flow-store-annotation'
                 version = lib_version
+
+                from components.kotlin
             }
         }
     }

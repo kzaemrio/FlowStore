@@ -4,6 +4,8 @@ plugins {
     id 'maven-publish'
 }
 
+group = lib_group
+
 dependencies {
     implementation "com.squareup:kotlinpoet:1.9.0"
 
@@ -23,6 +25,8 @@ afterEvaluate {
                 groupId = lib_group
                 artifactId = 'flow-store-compiler'
                 version = lib_version
+
+                from components.kotlin
             }
         }
     }
