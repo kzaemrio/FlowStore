@@ -1,6 +1,7 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'com.google.devtools.ksp' version "$ksp_version"
+    id 'maven-publish'
 }
 
 dependencies {
