@@ -14,7 +14,7 @@ dependencyResolutionManagement {
 //        jcenter() // Warning: this repository is going to shut down soon
     }
 }
-rootProject.name = "FlowStore"
+rootProject.name = "flow-store"
 //include ':app'
 include ':compiler'
 include ':annotation'

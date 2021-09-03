@@ -1,4 +1,4 @@
-package com.kz.compiler
+package com.kz.flowstore.compiler
 
 
 import com.google.auto.service.AutoService
@@ -7,7 +7,7 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.symbol.KSFile
 import com.google.devtools.ksp.symbol.KSValueParameter
-import com.kz.annotation.FlowStore
+import com.kz.flowstore.annotation.FlowStore
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 

@@ -17,7 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.kz.annotation.FlowStore
+import com.kz.flowstore.annotation.FlowStore
 import com.kz.flowstore.ui.theme.FlowStoreTheme
 
 class MainActivity : ComponentActivity() {

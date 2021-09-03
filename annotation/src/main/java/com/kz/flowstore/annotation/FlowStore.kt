@@ -1,4 +1,4 @@
-package com.kz.annotation
+package com.kz.flowstore.annotation
 
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)

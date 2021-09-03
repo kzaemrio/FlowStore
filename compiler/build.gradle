@@ -23,7 +23,7 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) {
                 groupId = lib_group
-                artifactId = 'flow-store-compiler'
+                artifactId = 'compiler'
                 version = lib_version
 
                 from components.kotlin
