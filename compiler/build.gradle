@@ -14,3 +14,16 @@ dependencies {
 
     implementation project(":annotation")
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                groupId = lib_group
+                artifactId = 'flow-store-compiler'
+                version = lib_version
+            }
+        }
+    }
+}

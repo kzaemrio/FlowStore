@@ -2,3 +2,16 @@ plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'maven-publish'
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                groupId = lib_group
+                artifactId = 'flow-store-annotation'
+                version = lib_version
+            }
+        }
+    }
+}

@@ -4,6 +4,9 @@ buildscript {
         compose_version = "1.0.1"
         kotlin_version = "1.5.21"
         ksp_version = "1.5.21-1.0.0-beta07"
+
+        lib_group = "com.github.kzaemrio"
+        lib_version = "0.0.1"
     }
     repositories {
         google()
