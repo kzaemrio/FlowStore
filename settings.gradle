@@ -1,0 +1,20 @@
+// The pluginManagement {} block must appear before any other statements in the script
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+//        jcenter() // Warning: this repository is going to shut down soon
+    }
+}
+rootProject.name = "FlowStore"
+include ':app'
+include ':compiler'
+include ':annotation'
