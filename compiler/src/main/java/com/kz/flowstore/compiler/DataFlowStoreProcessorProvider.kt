@@ -154,7 +154,7 @@ fun typeNameOf(typeIr: TypeIr): TypeName {
         if (typeIr.list.isEmpty()) {
             this
         } else {
-            parameterizedBy(typeIr.list.map(::com.kz.flowstore.compiler.typeNameOf))
+            parameterizedBy(typeIr.list.map(::typeNameOf))
         }
     }
 }
