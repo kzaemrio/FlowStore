@@ -59,7 +59,7 @@ dependencies {
 afterEvaluate {
     idea {
         android.sourceSets.forEach { sourceSet ->
-            sourceSet.java {
+            sourceSet.kotlin {
                 srcDir("build/generated/ksp/${sourceSet.name}/kotlin")
             }
         }
