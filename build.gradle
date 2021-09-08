@@ -6,7 +6,7 @@ buildscript {
         ksp_version = "1.5.21-1.0.0-beta07"
 
         lib_group = "com.github.kzaemrio"
-        lib_version = "0.0.1"
+        lib_version = "0.0.2"
     }
     repositories {
         google()
