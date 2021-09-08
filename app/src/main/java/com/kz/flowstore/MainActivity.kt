@@ -75,4 +75,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @FlowStore
-data class UiState(val text: String = "1234", val count: Int = 0)
+data class UiState(
+    val text: String = "1234",
+    val count: Int = 0,
+    val list: List<List<Int>> = emptyList()
+)

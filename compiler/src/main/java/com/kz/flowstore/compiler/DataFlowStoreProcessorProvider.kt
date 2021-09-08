@@ -3,19 +3,18 @@ package com.kz.flowstore.compiler
 
 import com.google.auto.service.AutoService
 import com.google.devtools.ksp.processing.*
-import com.google.devtools.ksp.symbol.KSAnnotated
-import com.google.devtools.ksp.symbol.KSClassDeclaration
-import com.google.devtools.ksp.symbol.KSFile
-import com.google.devtools.ksp.symbol.KSValueParameter
+import com.google.devtools.ksp.symbol.*
 import com.kz.flowstore.annotation.FlowStore
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+
+lateinit var kspLogger: KSPLogger
 
 @AutoService(SymbolProcessorProvider::class)
 class DataFlowStoreProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment) = DataFlowStoreProcessor(
         environment.codeGenerator
-    )
+    ).apply { kspLogger = environment.logger }
 }
 
 class DataFlowStoreProcessor(
@@ -35,14 +34,9 @@ fun collectIr(declaration: KSClassDeclaration): Ir {
     val className = declaration.simpleName.asString()
     val paramList = declaration.primaryConstructor!!.parameters.asSequence()
         .map { parameter: KSValueParameter ->
-            val typeDeclaration = parameter.type.resolve().declaration
-            val classDeclaration = typeDeclaration as KSClassDeclaration
             ParamIr(
                 parameter.name!!.asString(),
-                TypeIr(
-                    classDeclaration.packageName.asString(),
-                    classDeclaration.simpleName.asString()
-                )
+                typeIrOf(parameter.type)
             )
         }
         .toList()
@@ -90,7 +84,7 @@ fun codeGen(codeGenerator: CodeGenerator, ir: Ir) {
         FunSpec.builder(it.name)
             .addModifiers(KModifier.SUSPEND)
             .addParameter(
-                Name.block, ClassName(it.typeIr.pgName, it.typeIr.simpleName).run {
+                Name.block, type = typeNameOf(it.typeIr).run {
                     LambdaTypeName.get(receiver = this, returnType = this)
                 }
             )
@@ -137,6 +131,34 @@ fun codeGen(codeGenerator: CodeGenerator, ir: Ir) {
     }
 }
 
+
+fun typeIrOf(type: KSTypeReference): TypeIr {
+    val element = type.element
+    return if (element == null) {
+        type.resolve().declaration.run {
+            TypeIr(packageName.asString(), simpleName.asString())
+        }
+    } else {
+        type.resolve().declaration.run {
+            TypeIr(
+                packageName.asString(),
+                simpleName.asString(),
+                element.typeArguments.map { it.type!! }.map(::typeIrOf)
+            )
+        }
+    }
+}
+
+fun typeNameOf(typeIr: TypeIr): TypeName {
+    return ClassName(typeIr.pgName, typeIr.simpleName).run {
+        if (typeIr.list.isEmpty()) {
+            this
+        } else {
+            parameterizedBy(typeIr.list.map(::com.kz.flowstore.compiler.typeNameOf))
+        }
+    }
+}
+
 object Type {
     private const val pgName = "kotlinx.coroutines.flow"
     private const val stateFlowName = "StateFlow"
@@ -159,7 +181,8 @@ object Name {
 
 data class TypeIr(
     val pgName: String,
-    val simpleName: String
+    val simpleName: String,
+    val list: List<TypeIr> = emptyList()
 )
 
 data class ParamIr(
