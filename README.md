@@ -39,12 +39,30 @@ public class UiStateStore private constructor(
 ```
 
 ```
+// app/build.gradle
+
+plugins {
+    ...
+    id 'idea'
+}
+
 repositories {
     ...
     maven { url 'https://jitpack.io' }
 }
 
-implementation "com.github.kzaemrio.FlowStore:annotation:0.0.1"
-ksp("com.github.kzaemrio.FlowStore:compiler:0.0.1")
+dependencies {
+    implementation "com.github.kzaemrio.FlowStore:annotation:0.0.3"
+    ksp("com.github.kzaemrio.FlowStore:compiler:0.0.3")
+}
 
+afterEvaluate {
+    idea {
+        android.sourceSets.forEach { sourceSet ->
+            sourceSet.java {
+                srcDir("build/generated/ksp/${sourceSet.name}/kotlin")
+            }
+        }
+    }
+}
 ```
