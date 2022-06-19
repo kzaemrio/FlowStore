@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "flow-store"
-include ':app'
+//include ':app'
 include ':compiler'
 include ':annotation'
