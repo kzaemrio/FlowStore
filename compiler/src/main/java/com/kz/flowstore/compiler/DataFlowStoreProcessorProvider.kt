@@ -85,7 +85,7 @@ fun codeGen(codeGenerator: CodeGenerator, ir: Ir) {
             .addModifiers(KModifier.SUSPEND)
             .addParameter(
                 Name.block, type = typeNameOf(it.typeIr).run {
-                    LambdaTypeName.get(receiver = this, returnType = this)
+                    LambdaTypeName.get(receiver = this, returnType = this).copy(suspending = true)
                 }
             )
             .addStatement("val %L = %N.value", Name.oldState, backPropertySpec)
